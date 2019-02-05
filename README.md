@@ -23,7 +23,7 @@ NLTKを用いて、文章を単語列に変換します。その後、単語列�
 import preprocessing
 processor = preprocessing.PreProcessing()
 token_vectors, dictionary = processor.generate_token_vectors(data, max_len=MAX_LENGTH)
-$ token_vectors
+token_vectors
 > [
 >   [
 >     [322, 121, 12312, 222, ..., 5, 0, 0, 0], # sentense1
@@ -44,9 +44,7 @@ dictionary['word2idx']
 ## 学習
 
 ```py
-dialog = models.Dialog(input_dim=input_dim, input_length=input_length,
-                       hidden_dim=n_hidden, output_length=output_length,
-                       output_dim=output_dim, depth=depth)
+dialog = models.Dialog(dictionary, MAX_LENGTH, hidden_dim=n_hidden, depth=depth)
 model = dialog.create_model()
 for vectors in token_vectors:
     x_train, x_test, y_test, y_train = dialog.get_training_batch(vectors)
@@ -54,4 +52,15 @@ for vectors in token_vectors:
                  batch_size=batch_size, nb_epoch=nb_epoch,
                  validation_data=(x_test, y_test),
                  save_model=True)
+```
+
+## 応答テスト
+
+```py
+message = dialog.reply("hello")
+message
+> "hi, what's wrong?"
+message = dialog.reply("tell me how to use")
+message
+> "later, please"
 ```
