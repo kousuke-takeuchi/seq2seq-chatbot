@@ -15,7 +15,7 @@ def create_entrypoint(dir='.entrypoint'):
     return dir
 
 
-def load_token_vectors():
+def load_token_vectors(processor):
     print('[preprocessor] loading index data...')
     dir = create_entrypoint()
     vectors_filename = os.path.join(dir, 'token_vectors.pkl')
@@ -39,7 +39,7 @@ def _main():
     processor = preprocessing.PreProcessing()
     # s = list(data.values())[0]
 
-    token_vectors, dictionary = load_token_vectors()
+    token_vectors, dictionary = load_token_vectors(processor)
 
     print('[train] creating network...')
     input_dim = len(dictionary['words'])
