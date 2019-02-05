@@ -1,0 +1,5 @@
+__pycache__
+.entrypoint
+.venv
+.env
+.data
